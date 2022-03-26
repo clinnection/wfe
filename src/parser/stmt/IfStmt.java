@@ -10,8 +10,4 @@ public class IfStmt extends BlockStmt {
     private Block block;
     private List<ElseIfStmt> elseIfStmts;
     private ElseStmt elseStmt;
-
-    public IfStmt() {
-        setType(Type.If);
-    }
 }

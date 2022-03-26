@@ -36,16 +36,15 @@ while_stmt
     ;
 
 expr
-    : '-' expr                                      # negExpr
-    | '!' expr                                      # notExpr
-    | expr op=('*' | '/' | '%' ) expr               # multExpr
-    | expr op=('+' | '-' ) expr                     # addExpr
-    | expr op=('>=' | '<=' | '<' | '>' ) expr       # compExpr
-    | expr op=('==' | '!=' ) expr                   # eqExpr
-    | expr op=('&&' | '||' ) expr                   # logicalExpr
-    | func_expr                                     # funcExpr
-    | json_expr                                     # jsonExpr
-    | atom                                          # atomExpr
+    : '-' expr                                                  # negExpr
+    | '!' expr                                                  # notExpr
+    | expr op=('*' | '/' | '%' ) expr                           # multExpr
+    | expr op=('+' | '-' ) expr                                 # addExpr
+    | expr op=('>=' | '<=' | '<' | '>' | '==' | '!=') expr      # compExpr
+    | expr op=('&&' | '||' ) expr                               # logicalExpr
+    | func_expr                                                 # funcExpr
+    | json_expr                                                 # jsonExpr
+    | atom                                                      # atomExpr
     ;
 
 expr_list
@@ -100,6 +99,21 @@ STRING
 VAR_IDENTIFIER
     : [A-Za-z][A-Za-z0-9_]*
     ;
+
+OR       : '||';
+AND      : '&&';
+EQ       : '==';
+NE       : '!=';
+GTE      : '>=';
+LTE      : '<=';
+NOT      : '!';
+GT       : '>';
+LT       : '<';
+ADD      : '+';
+SUB      : '-';
+MUL      : '*';
+DIV      : '/';
+MOD      : '%';
 
 SPACE
     : [ \t\n\r] -> skip

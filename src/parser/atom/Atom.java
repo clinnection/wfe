@@ -1,19 +1,20 @@
 package parser.atom;
 
 public class Atom {
-    enum Type {
-        Invalid,
-        Boolean,
-        Integer,
-        Decimal,
-        String,
-        Identifier
+    public Atom(String value) {
+        this.value = value;
     }
 
-    public Type getType() {
-        return type;
+    public String getValue() {
+        return value;
     }
 
-    Type type = Type.Invalid;
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    private String value;
+
+
 
 }
