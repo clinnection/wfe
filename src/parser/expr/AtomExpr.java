@@ -16,4 +16,8 @@ public class AtomExpr extends Expr {
     public void setAtom(Atom atom) {
         this.atom = atom;
     }
+
+    public String getValue() {
+        return atom.getValue();
+    }
 }

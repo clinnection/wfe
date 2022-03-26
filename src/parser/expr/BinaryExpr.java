@@ -1,27 +1,43 @@
 package parser.expr;
 
 public class BinaryExpr extends Expr {
-    Expr op1;
-    Expr op2;
 
-    public BinaryExpr(Expr op1, Expr op2) {
-        this.op1 = op1;
-        this.op2 = op2;
+    String op;  // operation
+
+    Expr lhs;   // operand 1
+    Expr rhs;   // operand 2
+
+    public BinaryExpr(String op, Expr lhs, Expr rhs) {
+        this.op = op;
+        this.lhs = lhs;
+        this.rhs = rhs;
     }
 
-    public Expr getOp1() {
-        return op1;
+    public String getOp() {
+        return op;
     }
 
-    public void setOp1(Expr op1) {
-        this.op1 = op1;
+    public void setOp(String op) {
+        this.op = op;
     }
 
-    public Expr getOp2() {
-        return op2;
+    public Expr getLhs() {
+        return lhs;
     }
 
-    public void setOp2(Expr op2) {
-        this.op2 = op2;
+    public void setLhs(Expr lhs) {
+        this.lhs = lhs;
+    }
+
+    public Expr getRhs() {
+        return rhs;
+    }
+
+    public void setRhs(Expr rhs) {
+        this.rhs = rhs;
+    }
+
+    public String getValue() {
+        return "(" + op + " " + lhs.getValue() + " " + rhs.getValue() + ")";
     }
 }

@@ -1,8 +1,8 @@
 c := 10
-if x == 5 then
-    x := 5
+if x >= 5 && x <= 7 then
+    x := 40 + 50 * 70
 else if x == 6 then
-    x := 6
+    x := -5 - -7
 else if x == 7 then
     x := 7
 else

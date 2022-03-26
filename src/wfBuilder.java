@@ -1,11 +1,7 @@
 import parser.Block;
 import parser.Program;
 import parser.atom.*;
-import parser.expr.AtomExpr;
-import parser.expr.EqExpr;
-import parser.expr.Expr;
-import parser.stmt.BlockStmt;
-import parser.stmt.IfStmt;
+import parser.expr.*;
 import parser.stmt.Stmt;
 
 import java.util.Stack;
@@ -65,15 +61,98 @@ public class wfBuilder extends wfBaseListener {
         System.out.println("exitElseStmt " + ctx.getText().toString());
     }
 
-    @Override
-    public void exitEqExpr(wfParser.EqExprContext ctx) {
-        super.exitEqExpr(ctx);
-        System.out.println("exitEqExpr " + ctx.getText().toString());
+    /*
+     * Binary Expressions
+     */
 
+    @Override
+    public void exitCompExpr(wfParser.CompExprContext ctx) {
+        super.exitCompExpr(ctx);
+        System.out.println("exitCompExpr " + ctx.getText().toString());
+
+        Expr rhs = exprs.pop();
+        Expr lhs = exprs.pop();
+
+        CompExpr compExpr = new CompExpr(ctx.op.getText(), lhs, rhs);
+        System.out.println("CompExpr: " + compExpr.getValue());
+
+        exprs.push(compExpr);
+    }
+
+    @Override
+    public void exitMultExpr(wfParser.MultExprContext ctx) {
+        super.exitMultExpr(ctx);
+        System.out.println("exitMultExpr " + ctx.getText().toString());
+
+        Expr rhs = exprs.pop();
+        Expr lhs = exprs.pop();
+
+        MultExpr multExpr = new MultExpr(ctx.op.getText(), lhs, rhs);
+        System.out.println("MultExpr: " + multExpr.getValue());
+
+        exprs.push(multExpr);
+    }
+
+    @Override
+    public void exitAddExpr(wfParser.AddExprContext ctx) {
+        super.exitAddExpr(ctx);
+        System.out.println("exitAddExpr " + ctx.getText().toString());
+
+        Expr rhs = exprs.pop();
+        Expr lhs = exprs.pop();
+
+        AddExpr addExpr = new AddExpr(ctx.op.getText(), lhs, rhs);
+        System.out.println("AddExpr: " + addExpr.getValue());
+
+        exprs.push(addExpr);
+    }
+
+    @Override
+    public void exitLogicalExpr(wfParser.LogicalExprContext ctx) {
+        super.exitLogicalExpr(ctx);
+        System.out.println("exitLogicalExpr " + ctx.getText().toString());
+
+        Expr rhs = exprs.pop();
+        Expr lhs = exprs.pop();
+
+        LogicExpr logicExpr = new LogicExpr(ctx.op.getText(), lhs, rhs);
+        System.out.println("LogicExpr: " + logicExpr.getValue());
+
+        exprs.push(logicExpr);
     }
 
     /*
-     * Atoms
+     * Unary expressions
+     */
+
+    @Override
+    public void exitNegExpr(wfParser.NegExprContext ctx) {
+        super.exitNegExpr(ctx);
+        System.out.println("exitNegExpr " + ctx.getText().toString());
+
+        Expr rhs = exprs.pop();
+
+        NegExpr negExpr = new NegExpr( rhs);
+        System.out.println("NegExpr: " + negExpr.getValue());
+
+        exprs.push(negExpr);
+    }
+
+    @Override
+    public void exitNotExpr(wfParser.NotExprContext ctx) {
+        super.exitNotExpr(ctx);
+        System.out.println("exitNotExpr " + ctx.getText().toString());
+
+        Expr rhs = exprs.pop();
+
+        NotExpr notExpr = new NotExpr( rhs);
+        System.out.println("NotExpr: " + notExpr.getValue());
+
+        exprs.push(notExpr);
+    }
+
+    /*
+     * Atom expression
      */
     @Override
     public void exitAtomExpr(wfParser.AtomExprContext ctx) {
@@ -81,6 +160,10 @@ public class wfBuilder extends wfBaseListener {
         System.out.println("exitAtomExpr " + ctx.getText().toString());
         exprs.push(new AtomExpr(atoms.pop()));
     }
+
+    /*
+     * Atoms
+     */
 
     @Override
     public void enterIntAtom(wfParser.IntAtomContext ctx) {

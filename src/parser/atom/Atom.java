@@ -1,6 +1,8 @@
 package parser.atom;
 
 public class Atom {
+    private String value;
+
     public Atom(String value) {
         this.value = value;
     }
@@ -12,9 +14,4 @@ public class Atom {
     public void setValue(String value) {
         this.value = value;
     }
-
-    private String value;
-
-
-
 }
