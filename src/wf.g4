@@ -38,6 +38,7 @@ while_stmt
 expr
     : '-' expr                                                  # negExpr
     | '!' expr                                                  # notExpr
+    | '(' expr ')'                                              # parenExpr
     | expr op=('*' | '/' | '%' ) expr                           # multExpr
     | expr op=('+' | '-' ) expr                                 # addExpr
     | expr op=('>=' | '<=' | '<' | '>' | '==' | '!=') expr      # compExpr

@@ -151,6 +151,19 @@ public class wfBuilder extends wfBaseListener {
         exprs.push(notExpr);
     }
 
+    @Override
+    public void exitParenExpr(wfParser.ParenExprContext ctx) {
+        super.exitParenExpr(ctx);
+        System.out.println("exitParenExpr " + ctx.getText().toString());
+
+        Expr rhs = exprs.pop();
+
+        ParenExpr parenExpr = new ParenExpr( rhs);
+        System.out.println("ParenExpr: " + parenExpr.getValue());
+
+        exprs.push(parenExpr);
+    }
+
     /*
      * Atom expression
      */
