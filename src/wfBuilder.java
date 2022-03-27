@@ -39,7 +39,7 @@ public class wfBuilder extends wfBaseListener {
 
 
     /*
-     * If statements - ifThen
+     * If statements
      */
 
     @Override
