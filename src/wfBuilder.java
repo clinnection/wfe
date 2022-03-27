@@ -39,14 +39,13 @@ public class wfBuilder extends wfBaseListener {
 
 
     /*
-     * If statements
+     * If statements - ifThen
      */
 
     @Override
     public void exitIfStmt(wfParser.IfStmtContext ctx) {
         super.exitIfStmt(ctx);
         System.out.println("exitIfStmt " + ctx.getText().toString());
-
     }
 
     @Override
@@ -59,6 +58,14 @@ public class wfBuilder extends wfBaseListener {
     public void exitElseStmt(wfParser.ElseStmtContext ctx) {
         super.exitElseStmt(ctx);
         System.out.println("exitElseStmt " + ctx.getText().toString());
+    }
+
+    @Override
+    public void exitIfThen(wfParser.IfThenContext ctx) {
+        super.exitIfThen(ctx);
+        System.out.println("exitIfThen " + ctx.getText().toString());
+        Expr e = exprs.pop();
+        System.out.println("    expr:" + e.getValue());
     }
 
     /*

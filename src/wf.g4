@@ -20,19 +20,27 @@ assignment_stmt
     ;
 
 if_stmt
-    : 'if' expr 'then' block elseif_stmt* else_stmt? 'end' 'if' # ifStmt
+    : 'if' expr then block elseif_stmt* else_stmt? 'end' 'if' # ifStmt
     ;
 
 elseif_stmt
-    : 'else' 'if' expr 'then' block                 # elseifStmt
+    : 'else' 'if' expr then block                 # elseifStmt
     ;
 
 else_stmt
     : 'else' block                                  # elseStmt
     ;
 
+then
+    : 'then'                                        # ifThen
+    ;
+
+do
+    : 'do'                                          # whileDo
+    ;
+
 while_stmt
-    : 'while' expr 'do' block 'end' 'while'         # whileStmt
+    : 'while' expr do block 'end' 'while'         # whileStmt
     ;
 
 expr
