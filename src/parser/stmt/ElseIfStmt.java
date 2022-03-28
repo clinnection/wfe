@@ -1,4 +1,4 @@
 package parser.stmt;
 
-public class ElseIfStmt extends BlockStmt {
+public class ElseIfStmt extends ExprBlockStmt {
 }

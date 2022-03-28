@@ -20,11 +20,11 @@ assignment_stmt
     ;
 
 if_stmt
-    : 'if' expr if_then block elseif_stmt* else_stmt? 'end' 'if' # ifStmt
+    : 'if' expr if_then block else_if_stmt* else_stmt? 'end' 'if' # ifStmt
     ;
 
-elseif_stmt
-    : 'else' 'if' expr if_then block                 # elseifStmt
+else_if_stmt
+    : 'else' 'if' expr if_then block                 # elseIfStmt
     ;
 
 else_stmt
@@ -51,27 +51,11 @@ expr
     | expr op=('+' | '-' ) expr                                 # addExpr
     | expr op=('>=' | '<=' | '<' | '>' | '==' | '!=') expr      # compExpr
     | expr op=('&&' | '||' ) expr                               # logicalExpr
-    | func_expr                                                 # funcExpr
-    | json_expr                                                 # jsonExpr
     | atom                                                      # atomExpr
-    ;
-
-expr_list
-    : expr ( ',' expr )*
-    ;
-
-func_expr
-    : VAR_IDENTIFIER '(' expr_list ')'
     ;
 
 json_identifier
     : '{{'  json_attr ('.' json_attr)*   '}}'       # jsonPath
-    ;
-
-json_expr
-    : '{!'  json_attr ('.' json_attr)*   '}}'       # jsonPathMust
-    | '{?'  json_attr ('.' json_attr)*   '}}'       # jsonPathCond
-    | json_identifier                               # jsonPathExpr
     ;
 
 json_attr

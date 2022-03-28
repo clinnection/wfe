@@ -1,13 +1,26 @@
 package parser.stmt;
 
-import parser.Block;
-import parser.expr.Expr;
-
+import java.util.ArrayList;
 import java.util.List;
 
-public class IfStmt extends BlockStmt {
-    private Expr expr;
-    private Block block;
-    private List<ElseIfStmt> elseIfStmts;
+public class IfStmt extends ExprBlockStmt {
+
+    private List<ElseIfStmt> elseIfStmts = new ArrayList<ElseIfStmt>();
     private ElseStmt elseStmt;
+
+    public ElseStmt getElseStmt() {
+        return elseStmt;
+    }
+
+    public void setElseStmt(ElseStmt elseStmt) {
+        this.elseStmt = elseStmt;
+    }
+
+    public List<ElseIfStmt> getElseIfStmts() {
+        return elseIfStmts;
+    }
+
+    public void addElseIfStmts(ElseIfStmt elseIfStmt) {
+        this.elseIfStmts.add(elseIfStmt);
+    }
 }

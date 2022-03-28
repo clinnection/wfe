@@ -1,4 +1,4 @@
 package parser.stmt;
 
-public class ElseStmt extends Stmt {
+public class ElseStmt extends BlockStmt {
 }

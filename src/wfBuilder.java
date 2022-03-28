@@ -2,33 +2,41 @@ import parser.Block;
 import parser.Program;
 import parser.atom.*;
 import parser.expr.*;
-import parser.stmt.Stmt;
+import parser.stmt.*;
 
 import java.util.Stack;
 
 public class wfBuilder extends wfBaseListener {
 
-    private Program program;
     private Stack<Block> blocks;
     private Stack<Stmt> stmts;
     private Stack<Expr> exprs;
     private Stack<Atom> atoms;
 
     public wfBuilder() {
-        program = new Program();
-        blocks = new Stack<Block>();
-        stmts = new Stack<Stmt>();
-        exprs = new Stack<Expr>();
-        atoms = new Stack<Atom>();
+        blocks  = new Stack<Block>();
+        stmts   = new Stack<Stmt>();
+        exprs   = new Stack<Expr>();
+        atoms   = new Stack<Atom>();
+    }
+
+    @Override
+    public void enterProgram(wfParser.ProgramContext ctx) {
+        super.enterProgram(ctx);
+        System.out.println("enterProgram " + ctx.getText().toString());
+        stmts.push(new ProgramStmt());
     }
 
     @Override
     public void exitProgram(wfParser.ProgramContext ctx) {
         super.exitProgram(ctx);
         System.out.println("exitProgram " + ctx.getText().toString());
-        program.setBlock(blocks.pop());
     }
 
+
+    /*
+     * Block
+     */
     @Override
     public void enterBlock(wfParser.BlockContext ctx) {
         super.enterBlock(ctx);
@@ -37,41 +45,95 @@ public class wfBuilder extends wfBaseListener {
         blocks.push(block);
     }
 
+    @Override
+    public void exitBlock(wfParser.BlockContext ctx) {
+        super.exitBlock(ctx);
+        System.out.println("exitBlock " + ctx.getText().toString());
+
+        System.out.println("The size of the statements are: " + stmts.size());
+
+        BlockStmt s = (BlockStmt) stmts.peek();
+        s.setBlock(blocks.pop());
+    }
 
     /*
-     * If statements
+     * IfStmt statement
      */
+    @Override
+    public void enterIfStmt(wfParser.IfStmtContext ctx) {
+        super.enterIfStmt(ctx);
+        System.out.println("enterIfStmt " + ctx.getText().toString());
+        stmts.push(new IfStmt());
+    }
 
     @Override
     public void exitIfStmt(wfParser.IfStmtContext ctx) {
         super.exitIfStmt(ctx);
         System.out.println("exitIfStmt " + ctx.getText().toString());
+
+        Stmt ifStmt = stmts.pop();
+        Block block = blocks.peek();
+        block.addStmt(ifStmt);
+    }
+
+
+    /*
+     * ElseIfStmt statement
+     */
+    @Override
+    public void enterElseIfStmt(wfParser.ElseIfStmtContext ctx) {
+        super.enterElseIfStmt(ctx);
+        System.out.println("enterElseIfStmt " + ctx.getText().toString());
+        stmts.push(new ElseIfStmt());
     }
 
     @Override
-    public void exitElseifStmt(wfParser.ElseifStmtContext ctx) {
-        super.exitElseifStmt(ctx);
-        System.out.println("exitElseifStmt " + ctx.getText().toString());
+    public void exitElseIfStmt(wfParser.ElseIfStmtContext ctx) {
+        super.exitElseIfStmt(ctx);
+        System.out.println("exitElseIfStmt " + ctx.getText().toString());
+
+        ElseIfStmt elseIfStmt = (ElseIfStmt) stmts.pop();
+        IfStmt ifStmt = (IfStmt) stmts.peek();
+        ifStmt.addElseIfStmts(elseIfStmt);
+    }
+
+
+    /*
+     * ElseStmt statement
+     */
+    @Override
+    public void enterElseStmt(wfParser.ElseStmtContext ctx) {
+        super.enterElseStmt(ctx);
+        System.out.println("exitElseStmt " + ctx.getText().toString());
+        stmts.push(new ElseStmt());
     }
 
     @Override
     public void exitElseStmt(wfParser.ElseStmtContext ctx) {
         super.exitElseStmt(ctx);
         System.out.println("exitElseStmt " + ctx.getText().toString());
+
+        ElseStmt elseStmt = (ElseStmt) stmts.pop();
+        IfStmt ifStmt = (IfStmt) stmts.peek();
+        ifStmt.setElseStmt(elseStmt);
     }
 
+
+    /*
+     * Then
+     */
     @Override
     public void exitIfThen(wfParser.IfThenContext ctx) {
         super.exitIfThen(ctx);
         System.out.println("exitIfThen " + ctx.getText().toString());
-        Expr e = exprs.pop();
-        System.out.println("    expr:" + e.getValue());
+
+        ExprBlockStmt s = (ExprBlockStmt) stmts.peek();
+        s.setExpr(exprs.pop());
     }
 
     /*
      * Binary Expressions
      */
-
     @Override
     public void exitCompExpr(wfParser.CompExprContext ctx) {
         super.exitCompExpr(ctx);
