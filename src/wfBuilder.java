@@ -1,5 +1,4 @@
 import parser.Block;
-import parser.Program;
 import parser.atom.*;
 import parser.expr.*;
 import parser.stmt.*;
@@ -9,9 +8,9 @@ import java.util.Stack;
 public class wfBuilder extends wfBaseListener {
 
     private Stack<Block> blocks;
-    private Stack<Stmt> stmts;
-    private Stack<Expr> exprs;
-    private Stack<Atom> atoms;
+    private Stack<Stmt>  stmts;
+    private Stack<Expr>  exprs;
+    private Stack<Atom>  atoms;
 
     public wfBuilder() {
         blocks  = new Stack<Block>();
@@ -126,6 +125,41 @@ public class wfBuilder extends wfBaseListener {
     public void exitIfThen(wfParser.IfThenContext ctx) {
         super.exitIfThen(ctx);
         System.out.println("exitIfThen " + ctx.getText().toString());
+
+        ExprBlockStmt s = (ExprBlockStmt) stmts.peek();
+        s.setExpr(exprs.pop());
+    }
+
+    /*
+     * While
+     */
+    @Override
+    public void enterWhileStmt(wfParser.WhileStmtContext ctx) {
+        super.enterWhileStmt(ctx);
+        System.out.println("enterWhileStmt " + ctx.getText().toString());
+        stmts.push(new WhileStmt());
+    }
+
+    @Override
+    public void exitWhileStmt(wfParser.WhileStmtContext ctx) {
+        super.exitWhileStmt(ctx);
+        System.out.println("exitWhileStmt " + ctx.getText().toString());
+
+        Stmt whileStmt = stmts.pop();
+        Block block = blocks.peek();
+        block.addStmt(whileStmt);
+    }
+
+    // TODO: add continue
+    // TODO: add break
+
+    /*
+     * Do
+     */
+    @Override
+    public void exitWhileDo(wfParser.WhileDoContext ctx) {
+        super.exitWhileDo(ctx);
+        System.out.println("exitWhileDo " + ctx.getText().toString());
 
         ExprBlockStmt s = (ExprBlockStmt) stmts.peek();
         s.setExpr(exprs.pop());
