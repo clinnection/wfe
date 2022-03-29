@@ -21,7 +21,7 @@ decl
 
 assignment_stmt
     : VAR_IDENTIFIER  ':=' expr                          # varAssignStmt
-    | json_identifier ':=' expr                          # jsonAssignStmt
+//    | json_identifier ':=' expr                          # jsonAssignStmt
     ;
 
 if_stmt
@@ -59,14 +59,14 @@ expr
     | atom                                                      # atomExpr
     ;
 
-json_identifier
-    : '{{'  json_attr ('.' json_attr)*   '}}'       # jsonPath
-    ;
-
-json_attr
-    : expr                                          # jsonObject
-    | expr ('[' expr ']')?                          # jsonArray
-    ;
+//json_identifier
+//    : '{{'  json_attr ('.' json_attr)*   '}}'       # jsonPath
+//    ;
+//
+//json_attr
+//    : expr                                          # jsonObject
+//    | expr ('[' expr ']')?                          # jsonArray
+//    ;
 
 atom
     : BOOLEAN                                       # boolAtom
@@ -74,7 +74,7 @@ atom
     | DECIMAL                                       # numAtom
     | STRING                                        # strAtom
     | VAR_IDENTIFIER                                # varAtom
-    | json_identifier                               # jsonAtom
+//    | json_identifier                               # jsonAtom
     ;
 
 BOOLEAN
