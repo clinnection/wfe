@@ -5,7 +5,7 @@ program
     ;
 
 block
-    : stmt*
+    : decl* stmt*
     ;
 
 stmt
@@ -13,6 +13,11 @@ stmt
     | if_stmt
     | while_stmt
     ;
+
+decl
+    : 'declare' decl_var=VAR_IDENTIFIER decl_type=( 'boolean' | 'integer' | 'decimal' | 'string')
+    ;
+
 
 assignment_stmt
     : VAR_IDENTIFIER  ':=' expr                          # varAssignStmt

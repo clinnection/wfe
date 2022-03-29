@@ -2,6 +2,7 @@ import parser.Block;
 import parser.atom.*;
 import parser.expr.*;
 import parser.stmt.*;
+import parser.var.*;
 
 import java.util.Stack;
 
@@ -40,6 +41,7 @@ public class wfBuilder extends wfBaseListener {
     public void enterBlock(wfParser.BlockContext ctx) {
         super.enterBlock(ctx);
         System.out.println("enterBlock " + ctx.getText().toString());
+
         Block block = new Block();
         blocks.push(block);
     }
@@ -49,10 +51,49 @@ public class wfBuilder extends wfBaseListener {
         super.exitBlock(ctx);
         System.out.println("exitBlock " + ctx.getText().toString());
 
-        System.out.println("The size of the statements are: " + stmts.size());
-
         BlockStmt s = (BlockStmt) stmts.peek();
         s.setBlock(blocks.pop());
+    }
+
+    /*
+     * Declarations
+     */
+
+    @Override
+    public void exitDecl(wfParser.DeclContext ctx) {
+        super.exitDecl(ctx);
+
+
+        String name = ctx.decl_var.getText().toString();
+
+        System.out.println("exitDecl " + ctx.getText().toString());
+        System.out.println("   type: " + ctx.decl_type.getText().toString());
+        System.out.println("    var: " + name);
+
+        Var var;
+
+        if (blocks.peek().getVars().containsKey((name))) {
+            throw new RuntimeException(name + ": already declared");
+        }
+
+        switch (ctx.decl_type.getText().toString()) {
+            case "string":
+                var = new StringVar(name);
+                break;
+            case "integer":
+                var = new IntegerVar(name);
+                break;
+            case "boolean":
+                var = new BooleanVar(name);
+                break;
+            case "decimal":
+                var = new DecimalVar(name);
+                break;
+            default:
+                throw new RuntimeException("Invalid data type");
+        }
+
+        blocks.peek().addVar(var);
     }
 
     /*
@@ -289,13 +330,6 @@ public class wfBuilder extends wfBaseListener {
     }
 
     @Override
-    public void enterVarAtom(wfParser.VarAtomContext ctx) {
-        super.enterVarAtom(ctx);
-        System.out.println("enterVarAtom " + ctx.getText().toString());
-        atoms.push(new VarAtom(ctx.getText().toString()));
-    }
-
-    @Override
     public void enterBoolAtom(wfParser.BoolAtomContext ctx) {
         super.enterBoolAtom(ctx);
         System.out.println("enterBoolAtom " + ctx.getText().toString());
@@ -314,5 +348,28 @@ public class wfBuilder extends wfBaseListener {
         super.enterNumAtom(ctx);
         System.out.println("enterNumAtom " + ctx.getText().toString());
         atoms.push(new NumAtom(ctx.getText().toString()));
+    }
+
+    @Override
+    public void enterVarAtom(wfParser.VarAtomContext ctx) {
+        super.enterVarAtom(ctx);
+
+        String name = ctx.getText().toString();
+        System.out.println("enterVarAtom " + name);
+
+        if (!varExists(ctx.getText().toString())) {
+            System.err.println(name + ": not found");
+        }
+
+        atoms.push(new VarAtom(ctx.getText().toString()));
+    }
+
+    private boolean varExists(String name) {
+        for (int i = blocks.size() - 1; i >= 0; i--) {
+            if (blocks.get(i).getVars().containsKey(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
