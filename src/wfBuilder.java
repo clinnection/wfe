@@ -1,3 +1,4 @@
+import jdk.nashorn.internal.ir.Assignment;
 import parser.Block;
 import parser.atom.*;
 import parser.expr.*;
@@ -49,7 +50,7 @@ public class wfBuilder extends wfBaseListener {
     @Override
     public void exitBlock(wfParser.BlockContext ctx) {
         super.exitBlock(ctx);
-        System.out.println("exitBlock " + ctx.getText().toString());
+        System.out.println("exitBlock " + ctx.getText().toString() + "\n---\n");
 
         BlockStmt s = (BlockStmt) stmts.peek();
         s.setBlock(blocks.pop());
@@ -90,10 +91,42 @@ public class wfBuilder extends wfBaseListener {
                 var = new DecimalVar(name);
                 break;
             default:
-                throw new RuntimeException("Invalid data type");
+                throw new RuntimeException(name + ": invalid data type");
         }
 
         blocks.peek().addVar(var);
+    }
+
+    /*
+     * Assignment
+     */
+
+    @Override
+    public void enterVarAssignStmt(wfParser.VarAssignStmtContext ctx) {
+        super.enterVarAssignStmt(ctx);
+        System.out.println("enterVarAssignStmt " + ctx.getText().toString());
+    }
+
+    @Override
+    public void exitVarAssignStmt(wfParser.VarAssignStmtContext ctx) {
+        super.exitVarAssignStmt(ctx);
+        System.out.println("exitVarAssignStmt " + ctx.getText().toString());
+
+        String name = ctx.VAR_IDENTIFIER().getText().toString();
+
+        Var v = null;
+        for (int i = blocks.size() - 1; i >= 0; i--) {
+            v = blocks.get(i).getVars().get(name);
+            if (v != null) {
+                break;
+            }
+        }
+
+        if (v == null) {
+            throw new RuntimeException(name + ": not found");
+        }
+
+        blocks.peek().addStmt(new VarAssignStmt(exprs.pop(), v));
     }
 
     /*
