@@ -1,4 +1,3 @@
-import jdk.nashorn.internal.ir.Assignment;
 import parser.Block;
 import parser.atom.*;
 import parser.expr.*;
@@ -50,7 +49,7 @@ public class wfBuilder extends wfBaseListener {
     @Override
     public void exitBlock(wfParser.BlockContext ctx) {
         super.exitBlock(ctx);
-        System.out.println("exitBlock " + ctx.getText().toString() + "\n---\n");
+        System.out.println("exitBlock " + ctx.getText().toString());
 
         BlockStmt s = (BlockStmt) stmts.peek();
         s.setBlock(blocks.pop());
