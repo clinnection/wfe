@@ -26,8 +26,4 @@ public class UnaryExpr extends Expr {
     public void setRhs(Expr rhs) {
         this.rhs = rhs;
     }
-
-    public String getValue() {
-        return "(" + op + " " + " " + rhs.getValue() + ")";
-    }
 }

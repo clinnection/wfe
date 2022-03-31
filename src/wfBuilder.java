@@ -257,7 +257,6 @@ public class wfBuilder extends wfBaseListener {
         Expr lhs = exprs.pop();
 
         CompExpr compExpr = new CompExpr(ctx.op.getText(), lhs, rhs);
-        System.out.println("CompExpr: " + compExpr.getValue());
 
         exprs.push(compExpr);
     }
@@ -271,7 +270,6 @@ public class wfBuilder extends wfBaseListener {
         Expr lhs = exprs.pop();
 
         MultExpr multExpr = new MultExpr(ctx.op.getText(), lhs, rhs);
-        System.out.println("MultExpr: " + multExpr.getValue());
 
         exprs.push(multExpr);
     }
@@ -285,7 +283,6 @@ public class wfBuilder extends wfBaseListener {
         Expr lhs = exprs.pop();
 
         AddExpr addExpr = new AddExpr(ctx.op.getText(), lhs, rhs);
-        System.out.println("AddExpr: " + addExpr.getValue());
 
         exprs.push(addExpr);
     }
@@ -299,7 +296,6 @@ public class wfBuilder extends wfBaseListener {
         Expr lhs = exprs.pop();
 
         LogicExpr logicExpr = new LogicExpr(ctx.op.getText(), lhs, rhs);
-        System.out.println("LogicExpr: " + logicExpr.getValue());
 
         exprs.push(logicExpr);
     }
@@ -316,7 +312,6 @@ public class wfBuilder extends wfBaseListener {
         Expr rhs = exprs.pop();
 
         NegExpr negExpr = new NegExpr( rhs);
-        System.out.println("NegExpr: " + negExpr.getValue());
 
         exprs.push(negExpr);
     }
@@ -329,7 +324,6 @@ public class wfBuilder extends wfBaseListener {
         Expr rhs = exprs.pop();
 
         NotExpr notExpr = new NotExpr( rhs);
-        System.out.println("NotExpr: " + notExpr.getValue());
 
         exprs.push(notExpr);
     }
@@ -342,7 +336,6 @@ public class wfBuilder extends wfBaseListener {
         Expr rhs = exprs.pop();
 
         ParenExpr parenExpr = new ParenExpr( rhs);
-        System.out.println("ParenExpr: " + parenExpr.getValue());
 
         exprs.push(parenExpr);
     }
