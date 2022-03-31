@@ -1,9 +1,11 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import parser.Block;
 import parser.atom.*;
 import parser.expr.*;
 import parser.stmt.*;
 import parser.var.*;
 
+import java.io.File;
 import java.util.Stack;
 
 public class wfBuilder extends wfBaseListener {
@@ -13,7 +15,12 @@ public class wfBuilder extends wfBaseListener {
     private Stack<Expr>  exprs;
     private Stack<Atom>  atoms;
 
+    private ProgramStmt programStmt;
+
     public wfBuilder() {
+
+        programStmt = new ProgramStmt();
+
         blocks  = new Stack<Block>();
         stmts   = new Stack<Stmt>();
         exprs   = new Stack<Expr>();
@@ -24,7 +31,7 @@ public class wfBuilder extends wfBaseListener {
     public void enterProgram(wfParser.ProgramContext ctx) {
         super.enterProgram(ctx);
         System.out.println("enterProgram " + ctx.getText().toString());
-        stmts.push(new ProgramStmt());
+        stmts.push(programStmt);
     }
 
     @Override
@@ -358,28 +365,28 @@ public class wfBuilder extends wfBaseListener {
     public void enterIntAtom(wfParser.IntAtomContext ctx) {
         super.enterIntAtom(ctx);
         System.out.println("enterIntAtom " + ctx.getText().toString());
-        atoms.push(new IntAtom(ctx.getText().toString()));
+        atoms.push(new IntegerAtom(ctx.getText().toString()));
     }
 
     @Override
     public void enterBoolAtom(wfParser.BoolAtomContext ctx) {
         super.enterBoolAtom(ctx);
         System.out.println("enterBoolAtom " + ctx.getText().toString());
-        atoms.push(new BoolAtom(ctx.getText().toString()));
+        atoms.push(new BooleanAtom(ctx.getText().toString()));
     }
 
     @Override
     public void enterStrAtom(wfParser.StrAtomContext ctx) {
         super.enterStrAtom(ctx);
         System.out.println("enterStrAtom " + ctx.getText().toString());
-        atoms.push(new StrAtom(ctx.getText().toString()));
+        atoms.push(new StringAtom(ctx.getText().toString()));
     }
 
     @Override
     public void enterNumAtom(wfParser.NumAtomContext ctx) {
         super.enterNumAtom(ctx);
         System.out.println("enterNumAtom " + ctx.getText().toString());
-        atoms.push(new NumAtom(ctx.getText().toString()));
+        atoms.push(new DecimalAtom(ctx.getText().toString()));
     }
 
     @Override
