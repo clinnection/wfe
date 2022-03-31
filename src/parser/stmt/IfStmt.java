@@ -5,6 +5,10 @@ import java.util.List;
 
 public class IfStmt extends ExprBlockStmt {
 
+    public IfStmt() {
+        super(Type.If);
+    }
+
     private List<ElseIfStmt> elseIfStmts = new ArrayList<ElseIfStmt>();
     private ElseStmt elseStmt;
 

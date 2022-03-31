@@ -7,7 +7,8 @@ public class AssignmentStmt extends Stmt {
     private Expr expr;
     private Var var;
 
-    public AssignmentStmt(Expr expr, Var var) {
+    public AssignmentStmt(Type type, Expr expr, Var var) {
+        super(type);
         this.expr = expr;
         this.var = var;
     }

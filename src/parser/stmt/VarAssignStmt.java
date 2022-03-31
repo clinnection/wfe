@@ -6,6 +6,6 @@ import parser.var.Var;
 public class VarAssignStmt extends AssignmentStmt {
 
     public VarAssignStmt(Expr expr, Var var) {
-        super(expr, var);
+        super(Type.VarAssignment, expr, var);
     }
 }

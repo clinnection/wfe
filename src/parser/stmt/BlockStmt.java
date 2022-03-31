@@ -5,6 +5,10 @@ import parser.Block;
 public class BlockStmt extends Stmt{
     private Block block;
 
+    public BlockStmt(Type type) {
+        super(type);
+    }
+
     public Block getBlock() {
         return block;
     }
