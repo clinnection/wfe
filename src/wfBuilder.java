@@ -69,14 +69,9 @@ public class wfBuilder extends wfBaseListener {
     @Override
     public void exitDecl(wfParser.DeclContext ctx) {
         super.exitDecl(ctx);
-
+        System.out.println("exitDecl " + ctx.getText().toString());
 
         String name = ctx.decl_var.getText().toString();
-
-        System.out.println("exitDecl " + ctx.getText().toString());
-        System.out.println("   type: " + ctx.decl_type.getText().toString());
-        System.out.println("    var: " + name);
-
         Var var;
 
         if (blocks.peek().getVars().containsKey((name))) {
