@@ -6,6 +6,7 @@ public class AtomExpr extends Expr {
     Atom atom;
 
     public AtomExpr(Atom atom) {
+        super(Type.Atom);
         this.atom = atom;
     }
 

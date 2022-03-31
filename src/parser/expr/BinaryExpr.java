@@ -7,7 +7,8 @@ public class BinaryExpr extends Expr {
     Expr lhs;   // operand 1
     Expr rhs;   // operand 2
 
-    public BinaryExpr(String op, Expr lhs, Expr rhs) {
+    public BinaryExpr(Type type, String op, Expr lhs, Expr rhs) {
+        super(type);
         this.op = op;
         this.lhs = lhs;
         this.rhs = rhs;

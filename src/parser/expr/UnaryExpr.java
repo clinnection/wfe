@@ -5,7 +5,8 @@ public class UnaryExpr extends Expr {
     String op;  // operation
     Expr rhs;   // operand 2
 
-    public UnaryExpr(String op, Expr rhs) {
+    public UnaryExpr(Type type, String op, Expr rhs) {
+        super(type);
         this.op = op;
         this.rhs = rhs;
     }
