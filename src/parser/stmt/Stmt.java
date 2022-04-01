@@ -1,6 +1,9 @@
 package parser.stmt;
 
-public class Stmt {
+import org.json.JSONObject;
+import parser.ToJsonObject;
+
+public abstract class Stmt implements ToJsonObject {
 
     enum Type {
         Invalid,
@@ -25,4 +28,11 @@ public class Stmt {
     public void setType(Stmt.Type type) {
         this.type = type;
     }
+
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putOnce("type", type);
+        return jsonObject;
+    }
 }
+

@@ -1,8 +1,9 @@
 package parser.stmt;
 
+import org.json.JSONObject;
 import parser.expr.Expr;
 
-public class ExprBlockStmt extends BlockStmt {
+public abstract class ExprBlockStmt extends BlockStmt {
     private Expr expr;
 
     public ExprBlockStmt(Type type) {
@@ -15,5 +16,12 @@ public class ExprBlockStmt extends BlockStmt {
 
     public void setExpr(Expr expr) {
         this.expr = expr;
+    }
+
+    @Override
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = super.toJsonObject();
+        jsonObject.putOnce("expr", expr.toJsonObject());
+        return jsonObject;
     }
 }

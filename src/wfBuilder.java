@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
 import parser.Block;
 import parser.atom.*;
 import parser.expr.*;
@@ -38,6 +37,7 @@ public class wfBuilder extends wfBaseListener {
     public void exitProgram(wfParser.ProgramContext ctx) {
         super.exitProgram(ctx);
         System.out.println("exitProgram " + ctx.getText().toString());
+        System.out.println(programStmt.toJsonObject().toString());
     }
 
 
