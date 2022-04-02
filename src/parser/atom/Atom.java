@@ -1,6 +1,9 @@
 package parser.atom;
 
-public class Atom {
+import org.json.JSONObject;
+import parser.ToJsonObject;
+
+public abstract class Atom implements ToJsonObject {
     private String value;
 
     enum Type {
@@ -30,4 +33,12 @@ public class Atom {
     public void setValue(String value) {
         this.value = value;
     }
+
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putOnce("type", type);
+        jsonObject.putOnce("value", value);
+        return jsonObject;
+    }
 }
+
