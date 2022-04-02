@@ -27,7 +27,7 @@ public class Block {
 
         JSONArray jsonVars = new JSONArray();
         vars.forEach((key, value) -> jsonVars.put(value.toJsonObject()));
-        jsonObject.putOnce("vars", jsonVars);
+        jsonObject.putOnce("decls", jsonVars);
 
         JSONArray jsonStmts = new JSONArray();
         stmts.forEach((value) -> jsonStmts.put(value.toJsonObject()));
