@@ -1,6 +1,10 @@
 package parser.var;
 
-public class Var {
+import org.json.JSONArray;
+import org.json.JSONObject;
+import parser.ToJsonObject;
+
+public abstract class Var implements ToJsonObject {
 
     enum Type {
         Invalid,
@@ -33,5 +37,12 @@ public class Var {
     public Var(Type type, String name) {
         this.type = type;
         this.name = name;
+    }
+
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putOnce("type", type);
+        jsonObject.putOnce("name", name);
+        return jsonObject;
     }
 }
