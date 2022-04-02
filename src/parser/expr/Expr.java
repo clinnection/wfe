@@ -1,6 +1,8 @@
 package parser.expr;
 
-public class Expr {
+import org.json.JSONObject;
+
+public abstract class Expr {
 
     enum Type {
         Invalid,
@@ -22,5 +24,11 @@ public class Expr {
 
     public Type getType() {
         return type;
+    }
+
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putOnce("type", type);
+        return jsonObject;
     }
 }

@@ -1,5 +1,6 @@
 package parser.expr;
 
+import org.json.JSONObject;
 import parser.atom.Atom;
 
 public class AtomExpr extends Expr {
@@ -17,4 +18,13 @@ public class AtomExpr extends Expr {
     public void setAtom(Atom atom) {
         this.atom = atom;
     }
+
+    @Override
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putOnce("type", type);
+        jsonObject.putOnce("atom", atom.toJsonObject());
+        return jsonObject;
+    }
+
 }

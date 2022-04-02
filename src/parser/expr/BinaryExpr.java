@@ -1,6 +1,8 @@
 package parser.expr;
 
-public class BinaryExpr extends Expr {
+import org.json.JSONObject;
+
+public abstract class BinaryExpr extends Expr {
 
     String op;  // operation
 
@@ -36,5 +38,14 @@ public class BinaryExpr extends Expr {
 
     public void setRhs(Expr rhs) {
         this.rhs = rhs;
+    }
+
+    @Override
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = super.toJsonObject();
+        jsonObject.putOnce("op", op);
+        jsonObject.putOnce("lhs", lhs.toJsonObject());
+        jsonObject.putOnce("rhs", rhs.toJsonObject());
+        return jsonObject;
     }
 }

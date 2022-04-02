@@ -1,6 +1,8 @@
 package parser.expr;
 
-public class UnaryExpr extends Expr {
+import org.json.JSONObject;
+
+public abstract class UnaryExpr extends Expr {
 
     String op;  // operation
     Expr rhs;   // operand 2
@@ -25,5 +27,13 @@ public class UnaryExpr extends Expr {
 
     public void setRhs(Expr rhs) {
         this.rhs = rhs;
+    }
+
+    @Override
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = super.toJsonObject();
+        jsonObject.putOnce("op", op);
+        jsonObject.putOnce("rhs", rhs.toJsonObject());
+        return jsonObject;
     }
 }
