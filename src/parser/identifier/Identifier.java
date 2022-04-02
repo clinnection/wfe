@@ -1,6 +1,9 @@
 package parser.identifier;
 
-public class Identifier {
+import org.json.JSONObject;
+import parser.ToJsonObject;
+
+public abstract class Identifier implements ToJsonObject {
 
     enum Type {
         Invalid,
@@ -16,5 +19,11 @@ public class Identifier {
 
     public Type getType() {
         return type;
+    }
+
+    public JSONObject toJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putOnce("type", type);
+        return jsonObject;
     }
 }
