@@ -1,7 +1,9 @@
 package parser.atom;
 
+import parser.DataType;
+
 public class BooleanAtom extends Atom {
     public BooleanAtom(String value) {
-        super(Type.Boolean, value);
+        super(DataType.Boolean, value);
     }
 }

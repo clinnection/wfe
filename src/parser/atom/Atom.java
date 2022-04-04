@@ -1,31 +1,23 @@
 package parser.atom;
 
 import org.json.JSONObject;
+import parser.DataType;
 import parser.ToJsonObject;
 
 public abstract class Atom implements ToJsonObject {
     private String value;
 
-    enum Type {
-        Invalid,
-        Boolean,
-        Integer,
-        Decimal,
-        String,
-        Var
-    };
+    protected DataType type = DataType.Invalid;
 
-    protected Atom.Type type = Atom.Type.Invalid;
-
-    public Atom(Atom.Type type) {
+    public Atom(DataType type) {
         this.type = type;
     }
 
-    public Type getType() {
+    public DataType getType() {
         return type;
     }
 
-    public Atom(Type type, String value) {
+    public Atom(DataType type, String value) {
         this.type = type;
         this.value = value;
     }
