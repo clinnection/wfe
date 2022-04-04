@@ -25,6 +25,9 @@ The workflow engine language supports floating point numbers as double-precision
 ## Boolean
 The boolean type represents a logical quantity with two possible values, indicated by the literals ```true``` and ```false```
 
+## Date
+TODO: Add date type
+
 # Blocks
 All program statements exist within a "block". A block is one or more declarations followed by one or more statements.
 
