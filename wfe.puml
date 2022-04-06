@@ -1,0 +1,225 @@
+@startuml
+abstract class parser.atom.Atom {
+- String value
+# Atom.Type type
++ Type getType()
++ void setValue(String)
++ JSONObject toJsonObject()
+}
+enum parser.atom.Type {
++  Invalid
++  Boolean
++  Integer
++  Decimal
++  String
++  Var
+}
+abstract class parser.stmt.AssignmentStmt {
+- Expr expr
+- Var var
++ Expr getExpr()
++ void setExpr(Expr)
++ Var getVar()
++ void setVar(Var)
++ JSONObject toJsonObject()
+}
+class parser.atom.DecimalAtom {
+}
+abstract class parser.expr.UnaryExpr {
+~ String op
+~ Expr rhs
++ String getOp()
++ void setOp(String)
++ Expr getRhs()
++ void setRhs(Expr)
++ JSONObject toJsonObject()
+}
+class parser.atom.VarAtom {
+}
+class parser.expr.ParenExpr {
+}
+class parser.expr.AtomExpr {
+~ Atom atom
++ Atom getAtom()
++ void setAtom(Atom)
++ JSONObject toJsonObject()
+}
+class parser.stmt.ElseIfStmt {
+}
+interface parser.ToJsonObject {
++ JSONObject toJsonObject()
+}
+abstract class parser.stmt.BlockStmt {
+- Block block
++ void setBlock(Block)
++ JSONObject toJsonObject()
+}
+class parser.identifier.VarIdentifier {
+}
+abstract class parser.identifier.Identifier {
+# Type type
++ Type getType()
++ JSONObject toJsonObject()
+}
+enum parser.identifier.Type {
++  Invalid
++  Var
++  Json
+}
+class parser.atom.BooleanAtom {
+}
+class parser.stmt.ProgramStmt {
+}
+class parser.expr.LogicExpr {
+}
+class parser.var.DecimalVar {
+}
+abstract class parser.expr.Expr {
+# Expr.Type type
++ Type getType()
++ JSONObject toJsonObject()
+}
+enum parser.expr.Type {
++  Invalid
++  Add
++  Atom
++  Comp
++  Logic
++  Mult
++  Neg
++  Not
++  Paren
+}
+abstract class parser.var.Var {
+# Type type
+- String name
++ Type getType()
++ void setType(Type)
++ String getName()
++ void setName(Type,String)
++ JSONObject toJsonObject()
+}
+enum parser.var.Type {
++  Invalid
++  Boolean
++  Integer
++  Decimal
++  String
+}
+class parser.atom.StringAtom {
+}
+class parser.identifier.JsonIdentifier {
+}
+class parser.stmt.IfStmt {
+- List<ElseIfStmt> elseIfStmts
+- ElseStmt elseStmt
++ ElseStmt getElseStmt()
++ void setElseStmt(ElseStmt)
++ List<ElseIfStmt> getElseIfStmts()
++ void addElseIfStmts(ElseIfStmt)
++ JSONObject toJsonObject()
+}
+class parser.var.BooleanVar {
+}
+class parser.var.StringVar {
+}
+class parser.var.IntegerVar {
+}
+class parser.expr.CompExpr {
+}
+class parser.stmt.ElseStmt {
+}
+abstract class parser.expr.BinaryExpr {
+~ String op
+~ Expr lhs
+~ Expr rhs
++ String getOp()
++ void setOp(String)
++ Expr getLhs()
++ void setLhs(Expr)
++ Expr getRhs()
++ void setRhs(Expr)
++ JSONObject toJsonObject()
+}
+class parser.expr.MultExpr {
+}
+class parser.Block {
+- HashMap<String,Var> vars
+- List<Stmt> stmts
++ void addStmt(Stmt)
++ void addVar(Var)
++ HashMap<String,Var> getVars()
++ Var getVar(String)
++ JSONObject toJsonObject()
+}
+class parser.expr.NegExpr {
+}
+
+abstract class parser.stmt.Stmt {
+# Stmt.Type type
++ Stmt.Type getType()
++ void setType(Stmt.Type)
++ JSONObject toJsonObject()
+}
+enum parser.stmt.Type {
++  Invalid
++  If
++  ElseIf
++  Else
++  While
++  VarAssignment
++  Program
+}
+class parser.atom.IntegerAtom {
+}
+class parser.stmt.WhileStmt {
+}
+class parser.stmt.VarAssignStmt {
+}
+class parser.expr.AddExpr {
+}
+class parser.expr.NotExpr {
+}
+abstract class parser.stmt.ExprBlockStmt {
+- Expr expr
++ Expr getExpr()
++ void setExpr(Expr)
++ JSONObject toJsonObject()
+}
+
+
+parser.ToJsonObject <|.. parser.atom.Atom
+parser.stmt.Stmt <|-- parser.stmt.AssignmentStmt
+parser.atom.Atom <|-- parser.atom.DecimalAtom
+parser.expr.Expr <|-- parser.expr.UnaryExpr
+parser.atom.Atom <|-- parser.atom.VarAtom
+parser.expr.UnaryExpr <|-- parser.expr.ParenExpr
+parser.expr.Expr <|-- parser.expr.AtomExpr
+parser.stmt.ExprBlockStmt <|-- parser.stmt.ElseIfStmt
+parser.stmt.Stmt <|-- parser.stmt.BlockStmt
+parser.identifier.Identifier <|-- parser.identifier.VarIdentifier
+parser.ToJsonObject <|.. parser.identifier.Identifier
+parser.atom.Atom <|-- parser.atom.BooleanAtom
+parser.stmt.BlockStmt <|-- parser.stmt.ProgramStmt
+parser.expr.BinaryExpr <|-- parser.expr.LogicExpr
+parser.var.Var <|-- parser.var.DecimalVar
+parser.ToJsonObject <|.. parser.var.Var
+parser.atom.Atom <|-- parser.atom.StringAtom
+parser.identifier.Identifier <|-- parser.identifier.JsonIdentifier
+parser.stmt.ExprBlockStmt <|-- parser.stmt.IfStmt
+parser.var.Var <|-- parser.var.BooleanVar
+parser.var.Var <|-- parser.var.StringVar
+parser.var.Var <|-- parser.var.IntegerVar
+parser.expr.BinaryExpr <|-- parser.expr.CompExpr
+parser.stmt.BlockStmt <|-- parser.stmt.ElseStmt
+parser.expr.Expr <|-- parser.expr.BinaryExpr
+parser.expr.BinaryExpr <|-- parser.expr.MultExpr
+parser.expr.UnaryExpr <|-- parser.expr.NegExpr
+parser.ToJsonObject <|.. parser.stmt.Stmt
+parser.atom.Atom <|-- parser.atom.IntegerAtom
+parser.stmt.ExprBlockStmt <|-- parser.stmt.WhileStmt
+parser.stmt.AssignmentStmt <|-- parser.stmt.VarAssignStmt
+parser.expr.BinaryExpr <|-- parser.expr.AddExpr
+parser.expr.UnaryExpr <|-- parser.expr.NotExpr
+parser.stmt.BlockStmt <|-- parser.stmt.ExprBlockStmt
+@enduml

@@ -23,20 +23,20 @@ The workflow engine language supports integers, from -2147483648 to 2147483647, 
 The workflow engine language supports floating point numbers as double-precision 64-bit format IEEE 754 values and operations as specified in IEEE Standard for Binary Floating-Point Arithmetic, ANSI/IEEE Standard 754-1985
 
 ## Boolean
-The boolean type represents a logical quantity with two possible values, indicated by the literals ```true``` and ```false```
+The boolean operation represents a logical quantity with two possible values, indicated by the literals ```true``` and ```false```
 
 ## Date
-TODO: Add date type
+TODO: Add date operation
 
 # Blocks
 All program statements exist within a "block". A block is one or more declarations followed by one or more statements.
 
 ## Declarations
-A variable is a storage location and has an associated type. 
+A variable is a storage location and has an associated operation. 
 ```
-declare [name] [type]
+declare [name] [operation]
 ```
-Where "name" is the name of the variable, and "type" is one of:
+Where "name" is the name of the variable, and "operation" is one of:
 * string
 * integer
 * decimal
@@ -137,9 +137,60 @@ TODO: add continue
 ### break
 TODO: add break
 
-# Expressions
+# Operations
 
 
+## Integer Expressions
+
+The workflow engine programming language supports arithmetic operators for integer numbers + (addition), - (subtraction), * (multiplication),
+/ (division), and % (modulo). The following table summarizes the binary arithmetic integer operations in the workflow engine programming language.
+
+| Operator | Use | Description |
+| -------- | --- | ----------- |
+| + | op1 + op2 | Adds op1 and op2 |
+| - | op1 - op2 | Subtracts op2 from op1 |
+| * | op1 * op2 | Multiplies op1 by op2 | 
+| / | op1 / op2 | Divides op1 by op2 |   
+| % | op1 % op2 | Computes the remainder of dividing op1 by op2 |
+
+The resulting value of these operations shall be an integer value.
+
+## Decimal Expressions
+
+The workflow engine programming language supports arithmetic operators for decimal numbers + (addition), - (subtraction), * (multiplication),
+/ (division), and % (modulo). The following table summarizes the binary arithmetic decimal operations in the workflow engine programming language.
+
+| Operator | Use | Description |
+| -------- | --- | ----------- |
+| + | op1 + op2 | Adds op1 and op2 |
+| - | op1 - op2 | Subtracts op2 from op1 |
+| * | op1 * op2 | Multiplies op1 by op2 | 
+| / | op1 / op2 | Divides op1 by op2 |   
+| % | op1 % op2 | Computes the remainder of dividing op1 by op2 |
+
+The resulting value of these operations shall be a decimal value.
+
+### Integers in decimal operations
+
+If an operand used in a decimal operation (as op1 or op2) it is converted to a decimal first, then the operation proceeds and the resulting value shall be decimal.
 
 
+## Date
+The workflow engine programming language supports arithmetic operators for  date types. The following table summarizes the binary arithmetic date operations in the workflow engine programming language.
 
+| Operator | Use           | Description                            | Return Type |
+|----------|---------------|----------------------------------------|------------- |
+| +        | date1 + int1  | Add int1 days to date                  | date |
+| -        | date1 - int1  | Subtracts int1 days from date          | date |
+| -        | date1 - date2 | Number of days between date1 and date2 | Integer |
+
+Adding an integer to a date will return a date that is the number of days in the future of the integer value. Subtracting 
+an integer from a date will return a date that is the number of days in the past of the integer value. Subtracting a date 
+from a date will return in integer that is the number of days between date1 and date2.
+
+## Strings
+
+
+| Operator | Use         | Description                 | Return Type |
+|----------|-------------|-----------------------------|-------------|
+| +        | str1 + str2 | Concatenates str1 and str2  | string      |
