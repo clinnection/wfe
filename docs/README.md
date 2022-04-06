@@ -191,6 +191,12 @@ from a date will return in integer that is the number of days between date1 and 
 ## Strings
 
 
-| Operator | Use         | Description                 | Return Type |
-|----------|-------------|-----------------------------|-------------|
-| +        | str1 + str2 | Concatenates str1 and str2  | string      |
+| Operator | Use          | Description                 | Return Type |
+|----------|--------------|-----------------------------|-------------|
+| +        | str1 + str2  | Concatenates str1 and str2  | string      |
+| +        | str1 + int1  | Concatenates str1 and int1  | string      |
+| +        | str1 + dec1  | Concatenates str1 and dec1  | string      |
+| +        | str1 + date1 | Concatenates str1 and date1  | string      |
+
+When used with a string type, the plus (```+```) operator concatenates two strings. If the operand is not of string type,
+ then the operand is converted to a string type and concatenated  to the string. 
