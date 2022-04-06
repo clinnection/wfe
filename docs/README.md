@@ -172,7 +172,8 @@ The resulting value of these operations shall be a decimal value.
 
 ### Integers in decimal operations
 
-If an operand used in a decimal operation (as op1 or op2) it is converted to a decimal first, then the operation proceeds and the resulting value shall be decimal.
+If an integer operand used in a decimal operation (as op1 or op2) it is converted to a decimal first, then the operation
+proceeds and the resulting value shall be decimal.
 
 
 ## Date
